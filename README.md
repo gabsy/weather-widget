@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+# Weather Widget with OpenWeatherMap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Install
 
-Currently, two official plugins are available:
+Run ```npm install```.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+Create an ```.env``` from ```.env-sample``` and add an OpenWeather API Key.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+Run ```npm run dev```, project will start on ```https://localhost:5173```
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+<img width="500" alt="CleanShot 2024-02-11 at 20 08 05@2x" src="https://github.com/gabsy/weather-widget/assets/871700/cff749d3-debc-48fc-81ad-0779d952f646">
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<img width="490" alt="CleanShot 2024-02-11 at 20 11 43@2x" src="https://github.com/gabsy/weather-widget/assets/871700/d33d9c6a-b73b-4e9a-8e3e-b570ea5bcd81">
+
+
+
+## Web Components
+
+On the project branch **web-components**,  the  **CurrentWeather.tsx** React component can be seen implemented as Web Component, **CurrentWeather.ts**.
+
+## Storybook
+
+In a different terminal, run ```npm run storybook``` in the project root. Storybook will start on https://localhost:6006
+
+![CleanShot 2024-02-11 at 20 05 07@2x](https://github.com/gabsy/weather-widget/assets/871700/5b1255ec-31fc-4fad-af0e-08be9e2044a2)
+
+
