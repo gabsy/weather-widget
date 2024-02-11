@@ -62,7 +62,7 @@ const ForecastWeather: FC<ForecastWeatherProps> = ({ data }) => {
 							description={description}
 						/>
 						<div className="forecast-item-temp">
-							{temp_min.toFixed(0)}&deg; / {temp_max.toFixed(0)}
+							{temp_min.toFixed(0)}&deg;-{temp_max.toFixed(0)}
 							&deg;
 						</div>
 					</div>
