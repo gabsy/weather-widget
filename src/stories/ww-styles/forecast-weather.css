@@ -1,0 +1,46 @@
+.forecast-weather {
+	display: flex;
+	gap: var(--ww-spacing-xxs);
+	overflow-x: auto;
+	padding-bottom: var(--ww-spacing-xxs);
+	width: 100%;
+}
+
+.forecast-item {
+	align-items: center;
+	background: var(--ww-background-faded);
+	border-radius: var(--ww-border-radius-xs);
+	display: flex;
+	flex-direction: column;
+	padding: var(--ww-spacing-sm);
+
+	& .forecast-item-day {
+		text-transform: capitalize;
+	}
+
+	& .forecast-item-time {
+		font-size: var(--ww-font-size-xs);
+	}
+
+	& .weather-icon img {
+		margin: var(--ww-spacing-xxs) 0 0;
+		width: 3.1rem;
+	}
+}
+
+/* Scrollbar styling supported only on webkit-based browsers */
+.forecast-weather {
+	&::-webkit-scrollbar {
+		height: 1rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		border-radius: var(--ww-border-radius-full);
+		background: var(--ww-background-faded);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #fff;
+		border-radius: 1rem;
+	}
+}
