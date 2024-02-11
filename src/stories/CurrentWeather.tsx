@@ -56,7 +56,7 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.2 }}
+			transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.1 }}
 		>
 			<div className="current-weather">
 				<div className="temperature">
@@ -70,16 +70,16 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 				<WeatherIcon iconCode={iconCode} description={description} />
 				<div className="min-max">
 					{maxTemperature && (
-						<p>
+						<div>
 							<span className="label">Max</span> {maxTemperature}
 							{unitsSymbols.temperature}
-						</p>
+						</div>
 					)}
 					{minTemperature && (
-						<p>
+						<div>
 							<span className="label">Min</span> {minTemperature}
 							{unitsSymbols.temperature}
-						</p>
+						</div>
 					)}
 				</div>
 			</div>
