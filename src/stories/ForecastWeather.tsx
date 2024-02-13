@@ -1,6 +1,7 @@
 // import React from 'react';
 import WeatherIcon from './WeatherIcon';
 import { formatTime } from './ww-utils/utilsTime';
+import { adjustTemperature } from './ww-utils/utilsTemperature';
 import { motion } from 'framer-motion';
 
 interface Weather {
@@ -52,6 +53,8 @@ const ForecastWeather: FC<ForecastWeatherProps> = ({ data }) => {
 					weekday: 'short',
 				}).format(date);
 				const time = formatTime(dt, timezone, false);
+				const minTemperature = adjustTemperature(temp_min);
+				const maxTemperature = adjustTemperature(temp_max);
 
 				return (
 					<div key={index} className="forecast-item">
@@ -62,7 +65,7 @@ const ForecastWeather: FC<ForecastWeatherProps> = ({ data }) => {
 							description={description}
 						/>
 						<div className="forecast-item-temp">
-							{temp_min.toFixed(0)}&deg;-{temp_max.toFixed(0)}
+							{minTemperature}&deg;/{maxTemperature}
 							&deg;
 						</div>
 					</div>

@@ -32,7 +32,7 @@ interface WeatherWidgetProps {
 const WeatherWidget: FC<WeatherWidgetProps> = ({
 	lat,
 	lon,
-	city = 'Cluj-Napoca',
+	city = 'New York',
 	apiKey = import.meta.env.VITE_WW_API_KEY,
 	apiUrl = import.meta.env.VITE_WW_API_URL,
 	units = 'metric',

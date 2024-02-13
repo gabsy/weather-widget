@@ -1,5 +1,6 @@
 import WeatherIcon from './WeatherIcon';
 import { formatTime } from './utils/utilsTime';
+import { adjustTemperature } from './utils/utilsTemperature';
 import { motion } from 'framer-motion';
 
 interface WeatherMain {
@@ -48,9 +49,9 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 	const { icon: iconCode, description } = weather[0];
 	const { speed, deg } = wind;
 
-	const temperature = Math.round(temp);
-	const minTemperature = Math.round(temp_min);
-	const maxTemperature = Math.round(temp_max);
+	const temperature = adjustTemperature(temp);
+	const minTemperature = adjustTemperature(temp_min);
+	const maxTemperature = adjustTemperature(temp_max);
 
 	return (
 		<motion.div
@@ -69,18 +70,22 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 				</div>
 				<WeatherIcon iconCode={iconCode} description={description} />
 				<div className="min-max">
-					{maxTemperature && (
-						<div>
-							<span className="label">Max</span> {maxTemperature}
-							{unitsSymbols.temperature}
-						</div>
-					)}
-					{minTemperature && (
-						<div>
-							<span className="label">Min</span> {minTemperature}
-							{unitsSymbols.temperature}
-						</div>
-					)}
+					{maxTemperature !== null &&
+						maxTemperature !== undefined && (
+							<div>
+								<span className="label">Max</span>{' '}
+								{maxTemperature}
+								{unitsSymbols.temperature}
+							</div>
+						)}
+					{minTemperature !== null &&
+						minTemperature !== undefined && (
+							<div>
+								<span className="label">Min</span>{' '}
+								{minTemperature}
+								{unitsSymbols.temperature}
+							</div>
+						)}
 				</div>
 			</div>
 			<div className="additional-values">
