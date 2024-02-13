@@ -49,8 +49,10 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 	const { speed, deg } = wind;
 
 	const temperature = Math.round(temp);
-	const minTemperature = Math.round(temp_min);
-	const maxTemperature = Math.round(temp_max);
+	let minTemperature = Math.round(temp_min);
+	minTemperature = Object.is(minTemperature, -0) ? 0 : minTemperature;
+	let maxTemperature = Math.round(temp_max);
+	maxTemperature = Object.is(maxTemperature, -0) ? 0 : maxTemperature;
 
 	return (
 		<motion.div
@@ -69,18 +71,22 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
 				</div>
 				<WeatherIcon iconCode={iconCode} description={description} />
 				<div className="min-max">
-					{maxTemperature && (
-						<div>
-							<span className="label">Max</span> {maxTemperature}
-							{unitsSymbols.temperature}
-						</div>
-					)}
-					{minTemperature && (
-						<div>
-							<span className="label">Min</span> {minTemperature}
-							{unitsSymbols.temperature}
-						</div>
-					)}
+					{maxTemperature ||
+						(maxTemperature === 0 && (
+							<div>
+								<span className="label">Max</span>{' '}
+								{maxTemperature}
+								{unitsSymbols.temperature}
+							</div>
+						))}
+					{minTemperature ||
+						(minTemperature === 0 && (
+							<div>
+								<span className="label">Min</span>{' '}
+								{minTemperature}
+								{unitsSymbols.temperature}
+							</div>
+						))}
 				</div>
 			</div>
 			<div className="additional-values">
