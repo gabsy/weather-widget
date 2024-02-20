@@ -38,7 +38,7 @@ const WeatherIcon = ({ iconCode, description }: WeatherIconProps) => {
 		'50d': fog,
 		'50n': fog,
 	};
-	const iconName = iconsMappings[iconCode];
+	const iconName = iconsMappings[iconCode as keyof typeof iconsMappings];
 
 	return (
 		<div className="weather-icon">

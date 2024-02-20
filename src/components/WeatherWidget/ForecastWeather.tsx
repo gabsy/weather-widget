@@ -1,8 +1,8 @@
-// import React from 'react';
 import WeatherIcon from './WeatherIcon';
 import { formatTime } from './utils/utilsTime';
 import { adjustTemperature } from './utils/utilsTemperature';
 import { motion } from 'framer-motion';
+import { FC } from 'react'; // Import FC type from 'react'
 
 interface Weather {
 	icon: string;
@@ -21,7 +21,7 @@ interface Item {
 }
 
 interface City {
-	timezone: string;
+	timezone: number;
 }
 
 interface Data {
@@ -33,7 +33,9 @@ interface ForecastWeatherProps {
 	data: Data;
 }
 
-const ForecastWeather: FC<ForecastWeatherProps> = ({ data }) => {
+const ForecastWeather: FC<ForecastWeatherProps> = ({
+	data,
+}: ForecastWeatherProps) => {
 	const { list } = data;
 	const { timezone } = data.city;
 
@@ -44,7 +46,7 @@ const ForecastWeather: FC<ForecastWeatherProps> = ({ data }) => {
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.2 }}
 		>
-			{list.map((item, index) => {
+			{list.map((item: Item, index: number) => {
 				const { dt, main, weather } = item;
 				const { temp_min, temp_max } = main;
 				const { icon: iconCode, description } = weather[0];

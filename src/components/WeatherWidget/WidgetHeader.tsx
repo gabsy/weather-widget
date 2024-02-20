@@ -1,14 +1,15 @@
+import { FC } from 'react';
 import { motion } from 'framer-motion';
 import refreshIcon from './icons/icon-refresh.svg';
 
 interface Location {
-	city: string;
-	country: string;
+	city?: string;
+	country?: string;
 }
 
 interface WidgetHeaderProps {
 	location: Location;
-	description: string;
+	description?: string;
 	handleRefresh: () => void;
 }
 

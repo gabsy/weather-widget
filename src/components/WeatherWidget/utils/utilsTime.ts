@@ -1,4 +1,8 @@
-export function formatTime(timestamp, timezoneOffset, hour12 = true) {
+export function formatTime(
+	timestamp: number,
+	timezoneOffset: number,
+	hour12 = true,
+) {
 	const date = new Date((timestamp + timezoneOffset) * 1000);
 	const formattedTime = new Intl.DateTimeFormat('en-US', {
 		timeZone: 'UTC',

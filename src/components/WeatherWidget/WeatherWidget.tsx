@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import CurrentWeather from './CurrentWeather';
 import ForecastWeather from './ForecastWeather';
 import WidgetHeader from './WidgetHeader';
@@ -21,8 +21,8 @@ interface WeatherData {
 }
 
 interface WeatherWidgetProps {
-	lat?: number;
-	lon?: number;
+	lat?: number | null;
+	lon?: number | null;
 	city?: string;
 	apiKey: string;
 	apiUrl: string;
@@ -32,11 +32,11 @@ interface WeatherWidgetProps {
 const WeatherWidget: FC<WeatherWidgetProps> = ({
 	lat,
 	lon,
-	city = 'New York',
+	city = 'Cluj-Napoca',
 	apiKey = import.meta.env.VITE_WW_API_KEY,
 	apiUrl = import.meta.env.VITE_WW_API_URL,
 	units = 'metric',
-}) => {
+}: WeatherWidgetProps) => {
 	const [currentData, setCurrentData] = useState<WeatherData | null>(null);
 	const [forecastData, setForecastData] = useState<WeatherData | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -83,7 +83,8 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({
 		};
 
 		fetchData();
-	}, [lat, lon, city, apiKey, apiUrl, units, refresh, locationQuery]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lat, lon, city, apiKey, units, refresh]);
 
 	return (
 		<div className={`weather-widget ${dayTimeMode}`}>

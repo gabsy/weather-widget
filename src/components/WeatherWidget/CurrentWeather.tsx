@@ -2,6 +2,7 @@ import WeatherIcon from './WeatherIcon';
 import { formatTime } from './utils/utilsTime';
 import { adjustTemperature } from './utils/utilsTemperature';
 import { motion } from 'framer-motion';
+import { FC } from 'react';
 
 interface WeatherMain {
 	temp: number;
@@ -43,7 +44,10 @@ interface CurrentWeatherProps {
 	unitsSymbols: UnitsSymbols;
 }
 
-const CurrentWeather: FC<CurrentWeatherProps> = ({ data, unitsSymbols }) => {
+const CurrentWeather: FC<CurrentWeatherProps> = ({
+	data,
+	unitsSymbols,
+}: CurrentWeatherProps) => {
 	const { main, weather, sys, wind, timezone } = data;
 	const { temp, temp_min, temp_max, humidity } = main;
 	const { icon: iconCode, description } = weather[0];
