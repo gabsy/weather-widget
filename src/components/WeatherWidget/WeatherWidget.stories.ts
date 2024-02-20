@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import WeatherWidget from './WeatherWidget';
 
 const meta = {
-	title: 'MetroDigitalTest/Components/WeatherWidget',
+	title: 'Components/WeatherWidget',
 	component: WeatherWidget,
 	parameters: {
 		layout: 'centered',
