@@ -2,7 +2,7 @@ import WeatherIcon from './WeatherIcon';
 import { formatTime } from './utils/utilsTime';
 import { adjustTemperature } from './utils/utilsTemperature';
 import { motion } from 'framer-motion';
-import { FC } from 'react'; // Import FC type from 'react'
+import { FC } from 'react';
 
 interface Weather {
 	icon: string;

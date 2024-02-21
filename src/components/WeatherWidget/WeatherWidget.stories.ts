@@ -33,6 +33,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Variants
 export const Default: Story = {
 	args: {
 		lat: null,
@@ -41,5 +42,27 @@ export const Default: Story = {
 		apiKey: import.meta.env.VITE_WW_API_KEY,
 		apiUrl: import.meta.env.VITE_WW_API_URL,
 		units: 'metric',
+	},
+};
+
+export const WithCoordinates: Story = {
+	args: {
+		lat: 47.4979,
+		lon: 19.0402,
+		city: '',
+		apiKey: import.meta.env.VITE_WW_API_KEY,
+		apiUrl: import.meta.env.VITE_WW_API_URL,
+		units: 'metric',
+	},
+};
+
+export const WithDifferentUnits: Story = {
+	args: {
+		lat: null,
+		lon: null,
+		city: 'Cluj-Napoca',
+		apiKey: import.meta.env.VITE_WW_API_KEY,
+		apiUrl: import.meta.env.VITE_WW_API_URL,
+		units: 'imperial',
 	},
 };

@@ -65,31 +65,32 @@ const CurrentWeather: FC<CurrentWeatherProps> = ({
 		>
 			<div className="current-weather">
 				<div className="temperature">
-					{temperature && (
-						<p className="temperature">
-							{temperature}
-							{unitsSymbols.temperature}
-						</p>
-					)}
+					{temperature ||
+						(temperature === 0 && (
+							<p className="temperature">
+								{temperature}
+								{unitsSymbols.temperature}
+							</p>
+						))}
 				</div>
 				<WeatherIcon iconCode={iconCode} description={description} />
 				<div className="min-max">
-					{maxTemperature !== null &&
-						maxTemperature !== undefined && (
+					{maxTemperature ||
+						(maxTemperature === 0 && (
 							<div>
 								<span className="label">Max</span>{' '}
 								{maxTemperature}
 								{unitsSymbols.temperature}
 							</div>
-						)}
-					{minTemperature !== null &&
-						minTemperature !== undefined && (
+						))}
+					{minTemperature ||
+						(minTemperature === 0 && (
 							<div>
 								<span className="label">Min</span>{' '}
 								{minTemperature}
 								{unitsSymbols.temperature}
 							</div>
-						)}
+						))}
 				</div>
 			</div>
 			<div className="additional-values">

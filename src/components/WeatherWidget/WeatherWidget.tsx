@@ -20,7 +20,7 @@ interface WeatherData {
 	}>;
 }
 
-interface WeatherWidgetProps {
+export interface WeatherWidgetProps {
 	lat?: number | null;
 	lon?: number | null;
 	city?: string;
@@ -36,7 +36,7 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({
 	apiKey = import.meta.env.VITE_WW_API_KEY,
 	apiUrl = import.meta.env.VITE_WW_API_URL,
 	units = 'metric',
-}: WeatherWidgetProps) => {
+}) => {
 	const [currentData, setCurrentData] = useState<WeatherData | null>(null);
 	const [forecastData, setForecastData] = useState<WeatherData | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);

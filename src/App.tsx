@@ -1,10 +1,17 @@
+import WeatherWidget, {
+	WeatherWidgetProps,
+} from '@components/WeatherWidget/WeatherWidget';
 import './App.css';
-import WeatherWidget from '@components/WeatherWidget';
 
 function App() {
+	const weatherWidgetProps: WeatherWidgetProps = {
+		apiKey: import.meta.env.VITE_WW_API_KEY,
+		apiUrl: import.meta.env.VITE_WW_API_URL,
+	};
+
 	return (
 		<div className="main-wrapper">
-			<WeatherWidget />
+			<WeatherWidget {...weatherWidgetProps} />
 		</div>
 	);
 }
