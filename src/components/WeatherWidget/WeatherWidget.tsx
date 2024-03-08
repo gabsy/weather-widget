@@ -7,17 +7,32 @@ import '@fontsource/oswald/400.css';
 import '@fontsource/oswald/500.css';
 import './styles/index.css';
 
-interface WeatherData {
-	cod: string | number;
-	message?: string;
-	name?: string;
-	sys?: {
-		country?: string;
+interface WeatherMain {
+	temp: number;
+	temp_min: number;
+	temp_max: number;
+	humidity: number;
+}
+
+interface Wind {
+	speed: number;
+	deg: number;
+}
+
+export interface WeatherData {
+	name: string;
+	sys: {
+		country: string;
+		sunrise: number;
+		sunset: number;
 	};
-	weather?: Array<{
-		description?: string;
-		icon?: string;
+	weather: Array<{
+		description: string;
+		icon: string;
 	}>;
+	main: WeatherMain;
+	wind: Wind;
+	timezone: number;
 }
 
 export interface WeatherWidgetProps {
@@ -37,13 +52,19 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({
 	apiUrl = import.meta.env.VITE_WW_API_URL,
 	units = 'metric',
 }) => {
-	const [currentData, setCurrentData] = useState<WeatherData | null>(null);
-	const [forecastData, setForecastData] = useState<WeatherData | null>(null);
+	// const [currentData, setCurrentData] = useState<WeatherData | null>(null);
+	// const [forecastData, setForecastData] = useState<WeatherData | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [refresh, setRefresh] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
+
+	const [data, setData] = useState<{
+		currentData: WeatherData | null;
+		forecastData: WeatherData | null;
+	}>({ currentData: null, forecastData: null });
 
 	// Day or night mode based on current weather data
-	const dayTimeMode = currentData?.weather?.[0]?.icon?.includes('n')
+	const dayTimeMode = data?.currentData?.weather?.[0]?.icon?.includes('n')
 		? 'night'
 		: 'day';
 
@@ -57,34 +78,47 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({
 	};
 
 	// Refresh data function
-	const handleRefresh = (): void => {
+	const handleRefresh = () => {
 		setIsLoading(true);
 		setRefresh(!refresh);
 	};
 
-	useEffect(() => {
-		const fetchData = async (): Promise<void> => {
-			try {
-				const responseCurrent = await fetch(
+	// Fetch weather data function
+	const fetchData = async () => {
+		try {
+			const [responseCurrent, responseForecast] = await Promise.all([
+				fetch(
 					`${apiUrl}/weather?${locationQuery}&appid=${apiKey}&units=${units}`,
-				);
-				const currentData: WeatherData = await responseCurrent.json();
-				setCurrentData(currentData);
-
-				const responseForecast = await fetch(
+				) as Promise<Response>,
+				fetch(
 					`${apiUrl}/forecast?${locationQuery}&appid=${apiKey}&units=${units}`,
-				);
-				const forecastData: WeatherData = await responseForecast.json();
-				setForecastData(forecastData);
-				setIsLoading(false);
-			} catch (error) {
-				console.error('Error fetching weather data:', error);
-			}
-		};
+				) as Promise<Response>,
+			]);
 
+			if (!responseCurrent.ok || !responseForecast.ok) {
+				throw new Error('Error fetching data from the API');
+			}
+
+			const [currentData, forecastData] = await Promise.all([
+				responseCurrent.json() as Promise<WeatherData>,
+				responseForecast.json() as Promise<WeatherData>,
+			]);
+
+			setData({ currentData, forecastData });
+		} catch (error) {
+			console.error(error);
+			setError((error as Error).message);
+			setData({ currentData: null, forecastData: null });
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// Fetch weather data on component mount
+	useEffect(() => {
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lat, lon, city, apiKey, units, refresh]);
+	}, [refresh]);
 
 	return (
 		<div className={`weather-widget ${dayTimeMode}`}>
@@ -92,34 +126,29 @@ const WeatherWidget: FC<WeatherWidgetProps> = ({
 				<div className="loader">Loading data...</div>
 			) : (
 				<>
-					{currentData && currentData.cod === 200 ? (
+					{!error ? (
 						<>
 							<WidgetHeader
 								location={{
-									city: currentData.name,
-									country: currentData.sys?.country,
+									city: data.currentData?.name,
+									country: data.currentData?.sys?.country,
 								}}
 								description={
-									currentData.weather?.[0]?.description
+									data.currentData?.weather?.[0]?.description
 								}
 								handleRefresh={handleRefresh}
 							/>
 							<CurrentWeather
-								data={currentData}
+								data={data.currentData} // Add empty object as fallback
 								unitsSymbols={unitsSymbols}
 							/>
-							{forecastData && forecastData.cod === '200' && (
-								<ForecastWeather
-									data={forecastData}
-									unitsSymbols={unitsSymbols}
-								/>
-							)}
+							<ForecastWeather
+								data={data.forecastData}
+								unitsSymbols={unitsSymbols}
+							/>
 						</>
 					) : (
-						<div className="loader">
-							{currentData?.message ||
-								'Error fetching weather data'}
-						</div>
+						<div className="loader">{error}</div>
 					)}
 				</>
 			)}

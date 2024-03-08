@@ -13,8 +13,8 @@ import snow from './icons/icon-snow.svg';
 import fog from './icons/icon-fog.svg';
 
 interface WeatherIconProps {
-	iconCode: string;
-	description: string;
+	iconCode?: string;
+	description?: string;
 }
 
 const WeatherIcon = ({ iconCode, description }: WeatherIconProps) => {

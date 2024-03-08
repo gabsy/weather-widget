@@ -30,12 +30,13 @@ interface Data {
 }
 
 interface ForecastWeatherProps {
-	data: Data;
+	data: Data | null;
 }
 
 const ForecastWeather: FC<ForecastWeatherProps> = ({
 	data,
 }: ForecastWeatherProps) => {
+	if (!data) return null;
 	const { list } = data;
 	const { timezone } = data.city;
 
